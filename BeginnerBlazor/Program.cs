@@ -1,4 +1,5 @@
 using BeginnerBlazor.Components;
+using BeginnerBlazor.GlobalStates;
 
 namespace BeginnerBlazor
 {
@@ -11,7 +12,7 @@ namespace BeginnerBlazor
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
-
+            builder.Services.AddSingleton<MessageState>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

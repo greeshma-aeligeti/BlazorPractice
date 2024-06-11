@@ -1,4 +1,8 @@
 ﻿@page "/"
+@rendermode InteractiveServer
+@inject NavigationManager NavManager
+@using BeginnerBlazor.GlobalStates
+@inject MessageState messageState
 
 <PageTitle>Home</PageTitle>
 
@@ -7,10 +11,38 @@
 Welcome to your new app.
 <Sample/>
 
-<h3>One way Binding</h3>
+<h3>One way data Binding</h3>
 <h4>@msg</h4>
- 
+
+<h3>Two-Way two binding</h3>
+<input @bind-value="msg" class="form-control"/>
+
+<h4>Local State management</h4>
+
+<h1>This is output @messageState.Message</h1>
+<br />
+<br />
+<input type="text" class="form-control" @bind-value="messageState.Message" />
+ <button @onclick="GotoWeather" class="btn btn-primary">Weather</button>
+ <button @onclick="SetMessage">Set Message</button>
+<button @onclick="ClearMsg">clear Message</button>
+
 @code{
     string msg="Welcome to blazor page";
+    void GotoWeather()
+    {
+        NavManager.NavigateTo("weather");
+
+    }
+    void SetMessage()
+    {
+        string message = "Message in setmessage in home file";
+        messageState.SetMsg(message);
+    }
+    void ClearMsg()
+    {
+        messageState.ClearMsg();
+    }
+    string Variable;
 
 }

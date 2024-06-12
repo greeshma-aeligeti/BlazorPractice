@@ -1,0 +1,47 @@
+﻿@page "/team/{id:int}"
+<h3>TeamComponent</h3>
+<p>
+    Name: @team.Name
+
+</p>
+<p>
+    Region :@team.Region
+</p>
+
+<br/>
+
+<p>
+    Members
+</p>
+<ul>
+    @foreach(var mem in members)
+    {
+        <li>@mem.Name | @mem.Age</li>
+    }
+</ul>
+@code {
+    [Parameter]
+    public int Id{ get; set; }
+
+
+    private Team team;
+    private IEnumerable<Member> members;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        var teams = new List<Team>();
+        teams.Add(new Team { Id = 1, Name = "Red", Region = "Korea" });
+        teams.Add(new Team { Id = 2, Name = "Blue", Region = "North Korea" });
+        teams.Add(new Team { Id = 3, Name = "Yellow", Region = "South Asia" });
+
+        var allMembers = new List<Member>();
+        allMembers.Add(new Member { Id = 1, Name = "Paul", Age = 21, TeamId = 2 });
+        allMembers.Add(new Member { Id = 2, Name = "Atriedies", Age = 24, TeamId = 1 });
+        allMembers.Add(new Member { Id = 3, Name = "Fremen", Age = 31, TeamId = 1 });
+        allMembers.Add(new Member { Id = 4, Name = "Parul", Age = 11, TeamId = 3 });
+        allMembers.Add(new Member { Id = 5, Name = "Palavi", Age = 21, TeamId = 3 });
+        allMembers.Add(new Member { Id = 6, Name = "Maulik", Age = 19, TeamId = 2 });
+        team = teams.FirstOrDefault(x => x.Id == this.Id);
+        members = allMembers.Where(x => x.TeamId == this.Id);
+    }
+}

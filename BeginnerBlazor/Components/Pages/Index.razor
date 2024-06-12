@@ -57,8 +57,28 @@ Welcome to Index Component
 </p>
 
 <p>
-    
+    <ul>
+        @foreach(var loc in person.Locations)
+        {
+            <li>@loc.City, @loc.ProvState,@loc.Country</li>
+        }
+    </ul>
 
+</p>
+
+<p>
+    <table class="table">
+        @foreach(var loc in person.Locations)
+        {
+            <tr>
+                <td>@loc.Id</td>
+                <td><input type="text" @bind-value="@loc.City" @bind-value:event="oninput"/></td>
+                <td><input type="text" @bind-value="@loc.ProvState" @bind-value:event="oninput" /></td>
+                <td><input type="text" @bind-value="@loc.Country" @bind-value:event="oninput" /></td>
+
+            </tr>
+        }
+    </table>
 </p>
 
 

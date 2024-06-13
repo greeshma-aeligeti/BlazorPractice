@@ -1,0 +1,69 @@
+﻿@typeparam TItem
+@using System.Reflection
+<h3>GreetAutoComponent</h3>
+
+@if(memberInfo!=null && memberInfo.Length > 0)
+{
+    <table class="@($"table {this.CssClass}")">
+        <thead>
+            <tr>
+                @foreach(var mem in memberInfo)
+                {
+                    @if (mem.MemberType == MemberTypes.Property &&
+                   !ColumnsToExcludeCSV.Contains(mem.Name,StringComparison.OrdinalIgnoreCase)
+                    )
+                    {
+                        <th>
+                            @mem.Name
+                        </th>
+                    }
+                }
+            </tr>
+      
+
+        </thead>
+        <tbody>
+            @foreach(var item in this.Items)
+            {
+                <tr>
+                    
+                    @foreach (var mem in memberInfo)
+                    {
+                        @if (mem.MemberType == MemberTypes.Property && !ColumnsToExcludeCSV.Contains(mem.Name, StringComparison.OrdinalIgnoreCase))
+                        {
+                            <td>
+                                @item.GetType().GetProperty(mem.Name).GetValue(item)
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+@code {
+    MemberInfo[] memberInfo;
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if(Items!=null && Items.Count > 0)
+        {
+            Type typeofItem = this.Items[0].GetType();
+            memberInfo=  typeofItem.GetMembers();
+
+        }
+    }
+
+    [Parameter]
+    public List<TItem> Items{ get; set; }
+
+    [Parameter]
+    public string ColumnsToExcludeCSV { get; set; }
+
+    [Parameter]
+    public string CssClass{ get; set; }
+
+}

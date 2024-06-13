@@ -1,0 +1,13 @@
+﻿
+
+<h3>ParentComponent</h3>
+<p> current count: @currentCount</p>
+<Counter SetCurrentCount="SetCurrentCount"></Counter>
+
+@code {
+    private int currentCount;
+    private void SetCurrentCount(int value)
+    {
+        currentCount = value;
+    }
+}

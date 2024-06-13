@@ -1,0 +1,36 @@
+﻿@page "/template"
+@* <FieldComponent Label="Name">
+    <Control>
+        <input type="email" placeholder="Name" />
+    </Control>
+</FieldComponent>
+
+<FieldComponent Label="Title">
+    <Control>
+        <input type="email" placeholder="Name" />
+    </Control>
+</FieldComponent>
+<FieldComponent Label="Department">
+    <Control>
+        <input type="email" placeholder="Name" />
+    </Control>
+</FieldComponent> *@
+
+<GreetAutoComponent Items="Employees" ColumnsToExcludeCSV="Id, TeamId" CssClass="table-striped thead-dark"></GreetAutoComponent>
+@code {
+    private List<Member> Employees;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Employees = new List<Member>();
+        Employees.Add(new Member { Id = 1, Name = "Paul", Age = 21, TeamId = 2 });
+        Employees.Add(new Member { Id = 2, Name = "Atriedies", Age = 24, TeamId = 1 });
+        Employees.Add(new Member { Id = 3, Name = "Fremen", Age = 31, TeamId = 1 });
+        Employees.Add(new Member { Id = 4, Name = "Parul", Age = 11, TeamId = 3 });
+        Employees.Add(new Member { Id = 5, Name = "Palavi", Age = 21, TeamId = 3 });
+        Employees.Add(new Member { Id = 6, Name = "Maulik", Age = 19, TeamId = 2 });
+
+    }
+
+}

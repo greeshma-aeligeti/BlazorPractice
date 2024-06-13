@@ -8,14 +8,38 @@
 <p role="status">Current count: @currentCount</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-<CascadingValue Name="Counter" Value="@currentCount">
+@* <CascadingValue Name="Counter" Value="@currentCount">
+    <CascadingValue Name="TitleColor" Value="@("Blue")" IsFixed="true">
+
+    
 <Component1></Component1>
-</CascadingValue>
+    </CascadingValue>
+</Casca
+dingValue> *@
+<br/>
+<button class="btn btn-primary" @onclick="(()=>{
+child.Show();
+})">Show child Component</button>
+<br/>
+<br/>
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" @onclick="(()=>{
+dialog.Show();
+})">
+    Show Dialog Component
+</button>
+<ChildComponent @ref="child"></ChildComponent>
+<DialogComponent  @ref="dialog"></DialogComponent>
 @code {
+    [Parameter]
+    public EventCallback <int> SetCurrentCount{ get; set; }
+
+    private ChildComponent child;
+    private DialogComponent dialog;
     private int currentCount = 0;
 
     private void IncrementCount()
     {
         currentCount++;
+        SetCurrentCount.InvokeAsync(currentCount);
     }
 }

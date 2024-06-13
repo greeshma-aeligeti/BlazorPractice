@@ -1,4 +1,5 @@
 ﻿@page "/template"
+
 @* <FieldComponent Label="Name">
     <Control>
         <input type="email" placeholder="Name" />
@@ -15,10 +16,58 @@
         <input type="email" placeholder="Name" />
     </Control>
 </FieldComponent> *@
-
+@* 
 <GreetAutoComponent Items="Employees" ColumnsToExcludeCSV="Id, TeamId" CssClass="table-striped thead-dark"></GreetAutoComponent>
+ *@
+<RepeaterComponent @ref="repeater" Items="Employees">
+
+    <Header>
+
+        <h1>Employees</h1>
+    </Header>
+
+<Row Context="Employee">
+    <div><b>@Employee.Name</b></div>
+    &nbsp;
+    <button class="btn btn-primary" @onclick="@(()=>{
+EditCustomer(Employee);
+
+})">Edit</button> 
+    <div class="mx-lg-5">@Employee.Age</div>
+    <div class="mx-lg-5">@Employee.TeamId</div>
+    <br/>
+</Row>
+
+<Footer>
+    Contact us
+</Footer>
+
+<EditTemplate Context="currentEmp">
+
+    <p>heyyyy</p>
+    <div>
+        <text>
+                Emp name:
+            </text> <input class="form-control" @bind-value="currentEmp.Name" />
+      
+    </div>
+        <div>
+            <text>
+                Emp Age:
+            </text> <input class="form-control" @bind-value="currentEmp.Age" />
+         
+        </div>
+        <div>
+            <text>
+                Emp Teamid:
+            </text> <input class="form-control" @bind-value="currentEmp.TeamId" />
+           
+        </div>
+</EditTemplate> 
+</RepeaterComponent>
 @code {
     private List<Member> Employees;
+    private RepeaterComponent<Member> repeater;
 
     protected override void OnInitialized()
     {
@@ -32,5 +81,14 @@
         Employees.Add(new Member { Id = 6, Name = "Maulik", Age = 19, TeamId = 2 });
 
     }
+
+    private void EditCustomer(Member Emp)
+    {
+
+        repeater.ItemToEdit = Emp;
+       
+    }
+    
+
 
 }
